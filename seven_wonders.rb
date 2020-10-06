@@ -1,16 +1,35 @@
 require 'httparty'
 require "awesome_print"
 
-BASE_URL = "THE BASE URL FOR THE API REQUEST"
-LOCATION_IQ_KEY = "YOUR API TOKEN"
+BASE_URL = "https://us1.locationiq.com/v1/search.php"
+LOCATION_IQ_KEY = "pk.e9d6720152c8e19e15fb66788cbe243a"
 
 def get_location(search_term)
+  result = HTTParty.get(BASE_URL, query: {
+      key: LOCATION_IQ_KEY,
+      q: search_term,
+      format: 'json'
+  })
 
+  return {
+      search_term => {
+          lat: result.first["lat"],
+          lon: result.first["lon"],
+      }
+  }
 end
 
 def find_seven_wonders
 
-  seven_wonders = ["Great Pyramid of Giza", "Gardens of Babylon", "Colossus of Rhodes", "Pharos of Alexandria", "Statue of Zeus at Olympia", "Temple of Artemis", "Mausoleum at Halicarnassus"]
+  seven_wonders = [
+     "Great Pyramid of Giza",
+     "Gardens of Babylon",
+     "Colossus of Rhodes",
+     "Pharos of Alexandria",
+     "Statue of Zeus at Olympia",
+     "Temple of Artemis",
+     "Mausoleum at Halicarnassus"
+  ]
 
   seven_wonders_locations = []
 
